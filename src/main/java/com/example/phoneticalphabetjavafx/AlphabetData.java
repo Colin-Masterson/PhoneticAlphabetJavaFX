@@ -3,10 +3,10 @@ package com.example.phoneticalphabetjavafx;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Set;
+
 
 public class AlphabetData {
-    private HashMap<String, String> alphabet;
+    private final HashMap<String, String> alphabet;
     private String currentLetter;
 
     public AlphabetData(){
@@ -59,7 +59,7 @@ public class AlphabetData {
 
 
         public boolean isCorrect(String guess){
-            return guess.toLowerCase().equals(alphabet.get(currentLetter).toLowerCase());
+            return guess.equalsIgnoreCase(alphabet.get(currentLetter));
     }
 
 

@@ -17,11 +17,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 
 public class PhoneticAlphabet extends Application {
-    private AlphabetData alphabetData = new AlphabetData();
+    private final AlphabetData alphabetData = new AlphabetData();
     private int totalPoints = 0;
     private int seconds = 0;
 
