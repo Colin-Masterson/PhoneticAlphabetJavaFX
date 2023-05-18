@@ -18,8 +18,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
-
+import java.util.Set;
 
 
 public class PhoneticAlphabet extends Application {
@@ -49,6 +48,14 @@ public class PhoneticAlphabet extends Application {
         startLayout.setCenter(instructionBox);
         startLayout.setBottom(buttonBox);
 
+        /* Alphabet List*/
+        VBox alphabet = new VBox();
+
+        for(String key: alphabetData.getAlphabet().keySet()){
+            String answer = alphabetData.getAlphabet().get(key);
+            alphabet.getChildren().add(new Label(key + " -- " + answer));
+        }
+
 
 
         /*Main Game Screen*/
@@ -57,7 +64,7 @@ public class PhoneticAlphabet extends Application {
 
         //top
         HBox statsBox = new HBox();
-        statsBox.setSpacing(170);
+        statsBox.setSpacing(162);
         //display points
         Label points = new Label("Points: " + totalPoints);
         //display time
@@ -120,6 +127,12 @@ public class PhoneticAlphabet extends Application {
             Scene gameScreen = new Scene(layout,320,240);
             stage.setScene(gameScreen);
             timeline.play();
+        });
+
+        showAlphabet.setOnAction(e->{
+            Scene alphabetScreen = new Scene(alphabet, 320, 500);
+            stage.setScene(alphabetScreen);
+
         });
 
         Scene startScreen = new Scene(startLayout, 450, 240);
