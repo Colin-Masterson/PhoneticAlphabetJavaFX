@@ -99,6 +99,7 @@ public class PhoneticAlphabet extends Application {
 
         Scene scene = new Scene(layout, 320, 240);
         stage.setTitle("Learn the Phonetic Alphabet");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
