@@ -63,15 +63,31 @@
                             <mainClass>
                                 com.example.phoneticalphabetjavafx/com.example.phoneticalphabetjavafx.PhoneticAlphabet
                             </mainClass>
-                            <launcher>app</launcher>
-                            <jlinkZipName>app</jlinkZipName>
-                            <jlinkImageName>app</jlinkImageName>
+                            <launcher>PhoneticAlphabetLaunch</launcher>
+                            <jlinkZipName>PAlpha</jlinkZipName>
+                            <jlinkImageName>PAlpha</jlinkImageName>
                             <noManPages>true</noManPages>
                             <stripDebug>true</stripDebug>
                             <noHeaderFiles>true</noHeaderFiles>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <name>PhoneticAlphabet</name>
+                    <appVersion>0.0.1</appVersion>
+                    <vendor>com.example</vendor>
+                    <destination>target/out</destination>
+                    <module>com.example.phoneticalphabetjavafx/com.example.phoneticalphabetjavafx.PhoneticAlphabet</module>
+                    <runtimeImage>target/PAlpha</runtimeImage>
+                    <type>MSI</type>
+                    <winDirChooser>true</winDirChooser>
+                    <winShortcut>true</winShortcut>
+                </configuration>
             </plugin>
         </plugins>
     </build>
