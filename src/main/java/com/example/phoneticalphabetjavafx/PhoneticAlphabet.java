@@ -5,7 +5,6 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -144,23 +143,20 @@ public class PhoneticAlphabet extends Application {
 
         Scene gameScreen = new Scene(layout,320,240);
 
-        gameScreen.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-                    @Override
-                    public void handle(KeyEvent keyEvent) {
-                        if(keyEvent.getCode() == KeyCode.ENTER){
-                            if(alphabetData.isCorrect(input.getText())){
-                                totalPoints = totalPoints + 10;
-                                points.setText("Points: " + totalPoints);
+        gameScreen.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if(keyEvent.getCode() == KeyCode.ENTER){
+                if(alphabetData.isCorrect(input.getText())){
+                    totalPoints = totalPoints + 10;
+                    points.setText("Points: " + totalPoints);
 
 
-                            }
-                            alphabetData.getRandom();
-                            guessLetter.setText(alphabetData.getCurrentLetter());
-                            input.setText("");
-                            input.requestFocus();
-                        }
-                    }
-                });
+                }
+                alphabetData.getRandom();
+                guessLetter.setText(alphabetData.getCurrentLetter());
+                input.setText("");
+                input.requestFocus();
+            }
+        });
 
                 startGame.setOnAction(e -> {
 
