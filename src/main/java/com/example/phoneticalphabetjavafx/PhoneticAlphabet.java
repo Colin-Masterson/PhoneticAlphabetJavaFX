@@ -5,17 +5,21 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 
@@ -25,6 +29,9 @@ public class PhoneticAlphabet extends Application {
     private final AlphabetData alphabetData = new AlphabetData();
     private int totalPoints = 0;
     private int seconds = 0;
+
+    private final Stage alphabetWindow = new Stage();
+
 
     @Override
     public void start(Stage stage){
@@ -49,12 +56,33 @@ public class PhoneticAlphabet extends Application {
         startLayout.setBottom(buttonBox);
 
         /* Alphabet List*/
+        BorderPane alphabetLayout = new BorderPane();
+        alphabetLayout.setPadding(new Insets(0,30,30,30));
         VBox alphabet = new VBox();
-
+        alphabet.setAlignment(Pos.CENTER);
         for(String key: alphabetData.getAlphabet().keySet()){
             String answer = alphabetData.getAlphabet().get(key);
             alphabet.getChildren().add(new Label(key + " -- " + answer));
         }
+        HBox alphabetButtons = new HBox();
+        Button closeAlphabet = new Button("Close");
+
+        alphabetButtons.getChildren().add(closeAlphabet);
+        alphabetButtons.setAlignment(Pos.CENTER);
+
+        alphabetLayout.setCenter(alphabet);
+        alphabetLayout.setBottom(alphabetButtons);
+        Scene alphabetScreen = new Scene(alphabetLayout, 300, 600);
+        alphabetWindow.setTitle("Phonetic Alphabet");
+        alphabetWindow.setScene(alphabetScreen);
+        alphabetWindow.setResizable(false);
+        alphabetWindow.setX(400);
+        alphabetWindow.setY(100);
+        alphabetWindow.setOnCloseRequest(e->{
+            startGame.setDisable(false);
+           // alphabetWindow.hide();
+        });
+        alphabetWindow.initStyle(StageStyle.UTILITY);
 
 
 
@@ -78,25 +106,13 @@ public class PhoneticAlphabet extends Application {
 
         //Bottom
         HBox inputBox = new HBox();
-        inputBox.setSpacing(55);
+
         //input for user guess
         TextField input = new TextField();
-        //submit guess
-        Button submit = new Button("Submit");
-        submit.setOnAction(actionEvent -> {
-            if(alphabetData.isCorrect(input.getText())){
-                    this.totalPoints = totalPoints + 10;
-                    points.setText("Points: " + totalPoints);
-
-            }
-            alphabetData.getRandom();
-            guessLetter.setText(alphabetData.getCurrentLetter());
-            input.requestFocus();
-
-        });
 
 
-        inputBox.getChildren().addAll(input, submit);
+        inputBox.getChildren().add(input);
+        inputBox.setAlignment(Pos.CENTER);
 
         layout.setTop(statsBox);
         layout.setCenter(guessLetter);
@@ -123,16 +139,43 @@ public class PhoneticAlphabet extends Application {
             }
         }.start();
 
-        startGame.setOnAction(e->{
-            Scene gameScreen = new Scene(layout,320,240);
-            stage.setScene(gameScreen);
-            timeline.play();
-        });
+        /* Button actions */
+
+
+        Scene gameScreen = new Scene(layout,320,240);
+
+        gameScreen.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent keyEvent) {
+                        if(keyEvent.getCode() == KeyCode.ENTER){
+                            if(alphabetData.isCorrect(input.getText())){
+                                totalPoints = totalPoints + 10;
+                                points.setText("Points: " + totalPoints);
+
+
+                            }
+                            alphabetData.getRandom();
+                            guessLetter.setText(alphabetData.getCurrentLetter());
+                            input.setText("");
+                            input.requestFocus();
+                        }
+                    }
+                });
+
+                startGame.setOnAction(e -> {
+
+                    stage.setScene(gameScreen);
+                    timeline.play();
+                });
 
         showAlphabet.setOnAction(e->{
-            Scene alphabetScreen = new Scene(alphabet, 320, 500);
-            stage.setScene(alphabetScreen);
+            startGame.setDisable(true);
+            alphabetWindow.show();
+        });
 
+        closeAlphabet.setOnAction(e->{
+            startGame.setDisable(false);
+            alphabetWindow.hide();
         });
 
         Scene startScreen = new Scene(startLayout, 450, 240);
