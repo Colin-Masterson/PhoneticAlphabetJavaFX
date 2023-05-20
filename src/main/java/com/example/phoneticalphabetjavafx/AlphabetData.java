@@ -53,6 +53,10 @@ public class AlphabetData {
         this.currentLetter = letter;
     }
 
+    public HashMap<String, String> getAlphabet() {
+        return alphabet;
+    }
+
     public String getCurrentLetter() {
         return currentLetter;
     }
