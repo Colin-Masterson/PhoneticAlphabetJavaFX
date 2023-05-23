@@ -15,20 +15,21 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
 import javafx.util.Duration;
 
 
 public class PhoneticAlphabet extends Application {
     private final AlphabetData alphabetData = new AlphabetData();
-    private final StartLayout layout1 = new StartLayout() ;
+    private final StartLayout layout1 = new StartLayout();
+
     private int totalPoints = 0;
     private int seconds = 0;
 
-    private final Stage alphabetWindow = new Stage();
+    private Stage alphabetWindow;
 
 
     @Override
@@ -39,33 +40,10 @@ public class PhoneticAlphabet extends Application {
         BorderPane startLayout = layout1.getStartLayout(showAlphabet, startGame);
 
         /* Alphabet List*/
-        BorderPane alphabetLayout = new BorderPane();
-        alphabetLayout.setPadding(new Insets(0, 30, 30, 30));
-        VBox alphabet = new VBox();
-        alphabet.setAlignment(Pos.CENTER);
-        for (String key : alphabetData.getAlphabet().keySet()) {
-            String answer = alphabetData.getAlphabet().get(key);
-            alphabet.getChildren().add(new Label(key + " -- " + answer));
-        }
-        HBox alphabetButtons = new HBox();
         Button closeAlphabet = new Button("Close");
+        AlphabetListLayout layout2 = new AlphabetListLayout(closeAlphabet, startGame, alphabetData);
+        alphabetWindow = layout2.getAlphabetWindow();
 
-        alphabetButtons.getChildren().add(closeAlphabet);
-        alphabetButtons.setAlignment(Pos.CENTER);
-
-        alphabetLayout.setCenter(alphabet);
-        alphabetLayout.setBottom(alphabetButtons);
-        Scene alphabetScreen = new Scene(alphabetLayout, 300, 600);
-        alphabetWindow.setTitle("Phonetic Alphabet");
-        alphabetWindow.setScene(alphabetScreen);
-        alphabetWindow.setResizable(false);
-        alphabetWindow.setX(400);
-        alphabetWindow.setY(100);
-        alphabetWindow.setOnCloseRequest(e -> {
-            startGame.setDisable(false);
-            // alphabetWindow.hide();
-        });
-        alphabetWindow.initStyle(StageStyle.UTILITY);
 
 
 
