@@ -15,71 +15,35 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
 import javafx.util.Duration;
 
 
 public class PhoneticAlphabet extends Application {
     private final AlphabetData alphabetData = new AlphabetData();
+    private final StartLayout layout1 = new StartLayout();
+
     private int totalPoints = 0;
     private int seconds = 0;
 
-    private final Stage alphabetWindow = new Stage();
+    private Stage alphabetWindow;
 
 
     @Override
     public void start(Stage stage) {
         /*Start Screen*/
-        BorderPane startLayout = new BorderPane();
-        startLayout.setPadding(new Insets(0, 30, 30, 30));
-        Label instructions = new Label("The aim of this application is to help you learn the Phonetic Alphabet");
-        Label instructions2 = new Label("Press Show Alphabet below to view the Phonetic Alphabet");
-        Label instructions3 = new Label("When you are ready close the Alphabet window and start the game");
         Button showAlphabet = new Button("Show Alphabet");
         Button startGame = new Button("Start");
-        VBox instructionBox = new VBox();
-        HBox buttonBox = new HBox();
-        instructionBox.setSpacing(10);
-        instructionBox.setAlignment(Pos.CENTER);
-        instructionBox.getChildren().addAll(instructions, instructions2, instructions3);
-        buttonBox.setSpacing(10);
-        buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.getChildren().addAll(showAlphabet, startGame);
-
-        startLayout.setCenter(instructionBox);
-        startLayout.setBottom(buttonBox);
+        BorderPane startLayout = layout1.getStartLayout(showAlphabet, startGame);
 
         /* Alphabet List*/
-        BorderPane alphabetLayout = new BorderPane();
-        alphabetLayout.setPadding(new Insets(0, 30, 30, 30));
-        VBox alphabet = new VBox();
-        alphabet.setAlignment(Pos.CENTER);
-        for (String key : alphabetData.getAlphabet().keySet()) {
-            String answer = alphabetData.getAlphabet().get(key);
-            alphabet.getChildren().add(new Label(key + " -- " + answer));
-        }
-        HBox alphabetButtons = new HBox();
         Button closeAlphabet = new Button("Close");
+        AlphabetListLayout layout2 = new AlphabetListLayout(closeAlphabet, startGame, alphabetData);
+        alphabetWindow = layout2.getAlphabetWindow();
 
-        alphabetButtons.getChildren().add(closeAlphabet);
-        alphabetButtons.setAlignment(Pos.CENTER);
-
-        alphabetLayout.setCenter(alphabet);
-        alphabetLayout.setBottom(alphabetButtons);
-        Scene alphabetScreen = new Scene(alphabetLayout, 300, 600);
-        alphabetWindow.setTitle("Phonetic Alphabet");
-        alphabetWindow.setScene(alphabetScreen);
-        alphabetWindow.setResizable(false);
-        alphabetWindow.setX(400);
-        alphabetWindow.setY(100);
-        alphabetWindow.setOnCloseRequest(e -> {
-            startGame.setDisable(false);
-            // alphabetWindow.hide();
-        });
-        alphabetWindow.initStyle(StageStyle.UTILITY);
 
 
 
