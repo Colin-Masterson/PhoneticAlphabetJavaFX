@@ -24,6 +24,7 @@ import javafx.util.Duration;
 
 public class PhoneticAlphabet extends Application {
     private final AlphabetData alphabetData = new AlphabetData();
+    private final StartLayout layout1 = new StartLayout() ;
     private int totalPoints = 0;
     private int seconds = 0;
 
@@ -33,24 +34,9 @@ public class PhoneticAlphabet extends Application {
     @Override
     public void start(Stage stage) {
         /*Start Screen*/
-        BorderPane startLayout = new BorderPane();
-        startLayout.setPadding(new Insets(0, 30, 30, 30));
-        Label instructions = new Label("The aim of this application is to help you learn the Phonetic Alphabet");
-        Label instructions2 = new Label("Press Show Alphabet below to view the Phonetic Alphabet");
-        Label instructions3 = new Label("When you are ready close the Alphabet window and start the game");
         Button showAlphabet = new Button("Show Alphabet");
         Button startGame = new Button("Start");
-        VBox instructionBox = new VBox();
-        HBox buttonBox = new HBox();
-        instructionBox.setSpacing(10);
-        instructionBox.setAlignment(Pos.CENTER);
-        instructionBox.getChildren().addAll(instructions, instructions2, instructions3);
-        buttonBox.setSpacing(10);
-        buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.getChildren().addAll(showAlphabet, startGame);
-
-        startLayout.setCenter(instructionBox);
-        startLayout.setBottom(buttonBox);
+        BorderPane startLayout = layout1.getStartLayout(showAlphabet, startGame);
 
         /* Alphabet List*/
         BorderPane alphabetLayout = new BorderPane();
