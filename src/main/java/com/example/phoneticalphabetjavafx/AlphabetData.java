@@ -9,7 +9,7 @@ public class AlphabetData {
     private final HashMap<String, String> alphabet;
     private String currentLetter;
 
-    public AlphabetData(){
+    public AlphabetData() {
         alphabet = new HashMap<>();
 
         alphabet.put("A", "Alpha");
@@ -42,13 +42,13 @@ public class AlphabetData {
         getRandom();
     }
 
-    public void getRandom(){
+    public void getRandom() {
         String letter;
         ArrayList<String> key = new ArrayList<>(alphabet.keySet());
         Random random = new Random();
 
         int index = random.nextInt(key.size());
-        letter= key.get(index);
+        letter = key.get(index);
 
         this.currentLetter = letter;
     }
@@ -62,8 +62,8 @@ public class AlphabetData {
     }
 
 
-        public boolean isCorrect(String guess){
-            return guess.equalsIgnoreCase(alphabet.get(currentLetter));
+    public boolean isCorrect(String guess) {
+        return guess.equalsIgnoreCase(alphabet.get(currentLetter));
     }
 
 

@@ -22,8 +22,6 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 
-
-
 public class PhoneticAlphabet extends Application {
     private final AlphabetData alphabetData = new AlphabetData();
     private int totalPoints = 0;
@@ -33,10 +31,10 @@ public class PhoneticAlphabet extends Application {
 
 
     @Override
-    public void start(Stage stage){
+    public void start(Stage stage) {
         /*Start Screen*/
         BorderPane startLayout = new BorderPane();
-        startLayout.setPadding(new Insets(0,30,30,30));
+        startLayout.setPadding(new Insets(0, 30, 30, 30));
         Label instructions = new Label("The aim of this application is to help you learn the Phonetic Alphabet");
         Label instructions2 = new Label("Press Show Alphabet below to view the Phonetic Alphabet");
         Label instructions3 = new Label("When you are ready close the Alphabet window and start the game");
@@ -46,7 +44,7 @@ public class PhoneticAlphabet extends Application {
         HBox buttonBox = new HBox();
         instructionBox.setSpacing(10);
         instructionBox.setAlignment(Pos.CENTER);
-        instructionBox.getChildren().addAll(instructions,instructions2,instructions3);
+        instructionBox.getChildren().addAll(instructions, instructions2, instructions3);
         buttonBox.setSpacing(10);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().addAll(showAlphabet, startGame);
@@ -56,10 +54,10 @@ public class PhoneticAlphabet extends Application {
 
         /* Alphabet List*/
         BorderPane alphabetLayout = new BorderPane();
-        alphabetLayout.setPadding(new Insets(0,30,30,30));
+        alphabetLayout.setPadding(new Insets(0, 30, 30, 30));
         VBox alphabet = new VBox();
         alphabet.setAlignment(Pos.CENTER);
-        for(String key: alphabetData.getAlphabet().keySet()){
+        for (String key : alphabetData.getAlphabet().keySet()) {
             String answer = alphabetData.getAlphabet().get(key);
             alphabet.getChildren().add(new Label(key + " -- " + answer));
         }
@@ -77,9 +75,9 @@ public class PhoneticAlphabet extends Application {
         alphabetWindow.setResizable(false);
         alphabetWindow.setX(400);
         alphabetWindow.setY(100);
-        alphabetWindow.setOnCloseRequest(e->{
+        alphabetWindow.setOnCloseRequest(e -> {
             startGame.setDisable(false);
-           // alphabetWindow.hide();
+            // alphabetWindow.hide();
         });
         alphabetWindow.initStyle(StageStyle.UTILITY);
 
@@ -87,7 +85,7 @@ public class PhoneticAlphabet extends Application {
 
         /*Main Game Screen*/
         BorderPane layout = new BorderPane();
-        layout.setPadding(new Insets(0,30,30,30));
+        layout.setPadding(new Insets(0, 30, 30, 30));
 
         //top
         HBox statsBox = new HBox();
@@ -128,10 +126,10 @@ public class PhoneticAlphabet extends Application {
         timeline.setCycleCount(Animation.INDEFINITE);
 
 
-        new AnimationTimer(){
+        new AnimationTimer() {
             @Override
             public void handle(long l) {
-                if(seconds >=30){
+                if (seconds >= 30) {
                     timeline.stop();
                     guessLetter.setText("Fin");
                 }
@@ -141,11 +139,11 @@ public class PhoneticAlphabet extends Application {
         /* Button actions */
 
 
-        Scene gameScreen = new Scene(layout,320,240);
+        Scene gameScreen = new Scene(layout, 320, 240);
 
         gameScreen.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-            if(keyEvent.getCode() == KeyCode.ENTER){
-                if(alphabetData.isCorrect(input.getText())){
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                if (alphabetData.isCorrect(input.getText())) {
                     totalPoints = totalPoints + 10;
                     points.setText("Points: " + totalPoints);
 
@@ -158,18 +156,18 @@ public class PhoneticAlphabet extends Application {
             }
         });
 
-                startGame.setOnAction(e -> {
+        startGame.setOnAction(e -> {
 
-                    stage.setScene(gameScreen);
-                    timeline.play();
-                });
+            stage.setScene(gameScreen);
+            timeline.play();
+        });
 
-        showAlphabet.setOnAction(e->{
+        showAlphabet.setOnAction(e -> {
             startGame.setDisable(true);
             alphabetWindow.show();
         });
 
-        closeAlphabet.setOnAction(e->{
+        closeAlphabet.setOnAction(e -> {
             startGame.setDisable(false);
             alphabetWindow.hide();
         });
@@ -181,7 +179,6 @@ public class PhoneticAlphabet extends Application {
         stage.setScene(startScreen);
         stage.show();
     }
-
 
 
     public static void main(String[] args) {
