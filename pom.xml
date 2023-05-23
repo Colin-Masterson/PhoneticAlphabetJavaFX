@@ -79,7 +79,7 @@
                 <version>1.6.0</version>
                 <configuration>
                     <name>PhoneticAlphabet</name>
-                    <appVersion>0.1.0</appVersion>
+                    <appVersion>0.2.3</appVersion>
                     <vendor>com.example</vendor>
                     <destination>target/out</destination>
                     <module>com.example.phoneticalphabetjavafx/com.example.phoneticalphabetjavafx.PhoneticAlphabet</module>
