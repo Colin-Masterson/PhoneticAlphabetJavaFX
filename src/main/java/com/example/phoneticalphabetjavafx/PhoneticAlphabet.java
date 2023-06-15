@@ -5,8 +5,6 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -25,6 +22,8 @@ import javafx.util.Duration;
 public class PhoneticAlphabet extends Application {
     private final AlphabetData alphabetData = new AlphabetData();
     private final StartLayout layout1 = new StartLayout();
+
+    private final GameLayout gameLayout = new GameLayout();
 
     private int totalPoints = 0;
     private int seconds = 0;
@@ -44,40 +43,13 @@ public class PhoneticAlphabet extends Application {
         AlphabetListLayout layout2 = new AlphabetListLayout(closeAlphabet, startGame, alphabetData);
         alphabetWindow = layout2.getAlphabetWindow();
 
-
-
-
         /*Main Game Screen*/
-        BorderPane layout = new BorderPane();
-        layout.setPadding(new Insets(0, 30, 30, 30));
-
-        //top
-        HBox statsBox = new HBox();
-        statsBox.setSpacing(162);
-        //display points
-        Label points = new Label("Points: " + totalPoints);
-        //display time
         Label time = new Label("Time: 0");
-        statsBox.getChildren().addAll(points, time);
-
-        //center
-        //will display a random letter
+        Label points = new Label("Points: " + totalPoints);
+        TextField input = new TextField();
         Label guessLetter = new Label(alphabetData.getCurrentLetter());
         guessLetter.setFont(new Font("Ariel", 50));
-
-        //Bottom
-        HBox inputBox = new HBox();
-
-        //input for user guess
-        TextField input = new TextField();
-
-
-        inputBox.getChildren().add(input);
-        inputBox.setAlignment(Pos.CENTER);
-
-        layout.setTop(statsBox);
-        layout.setCenter(guessLetter);
-        layout.setBottom(inputBox);
+        BorderPane layout = gameLayout.getGameLayout(time, points, input, guessLetter);
 
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
