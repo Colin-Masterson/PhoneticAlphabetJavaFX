@@ -3,7 +3,7 @@ package com.example.phoneticalphabetjavafx;
 import java.util.Arrays;
 
 public class LevensteinDistance {
-
+//
     static int calculate(String x, String y) {
         x = x.toLowerCase();
         y = y.toLowerCase();
