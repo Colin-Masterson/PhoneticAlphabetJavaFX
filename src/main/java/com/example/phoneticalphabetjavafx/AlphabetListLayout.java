@@ -14,18 +14,18 @@ import javafx.stage.StageStyle;
 public class AlphabetListLayout {
     private final Stage alphabetWindow;
 
-    public AlphabetListLayout(Button btnClose, Button btnStart, AlphabetData alphabetData){
+    public AlphabetListLayout(Button btnClose, Button btnStart, InitiliseGameData initiliseGameData){
         alphabetWindow = new Stage();
-        getAlphabetList(btnClose,btnStart,alphabetData);
+        getAlphabetList(btnClose,btnStart, initiliseGameData);
     }
 
-    private void getAlphabetList(Button btnClose, Button btnStart, AlphabetData alphabetData){
+    private void getAlphabetList(Button btnClose, Button btnStart, InitiliseGameData initiliseGameData){
         BorderPane alphabetLayout = new BorderPane();
         alphabetLayout.setPadding(new Insets(0, 30, 30, 30));
         VBox alphabet = new VBox();
         alphabet.setAlignment(Pos.CENTER);
-        for (String key : alphabetData.getAlphabet().keySet()) {
-            String answer = alphabetData.getAlphabet().get(key);
+        for (String key : initiliseGameData.getAlphabet().keySet()) {
+            String answer = initiliseGameData.getAlphabet().get(key);
             alphabet.getChildren().add(new Label(key + " -- " + answer));
         }
         HBox alphabetButtons = new HBox();

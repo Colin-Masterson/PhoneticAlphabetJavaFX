@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.Random;
 
 
-public class AlphabetData {
+public class InitiliseGameData {
     private final HashMap<String, String> alphabet;
     private String currentLetter;
 
-    public AlphabetData() {
+    public InitiliseGameData() {
         alphabet = new HashMap<>();
 
         alphabet.put("A", "Alpha");
@@ -39,10 +39,10 @@ public class AlphabetData {
         alphabet.put("Y", "Yankee");
         alphabet.put("Z", "Zulu");
 
-        getRandom();
+        selectRandomLetter();
     }
 
-    public void getRandom() {
+    public void selectRandomLetter() {
         String letter;
         ArrayList<String> key = new ArrayList<>(alphabet.keySet());
         Random random = new Random();
