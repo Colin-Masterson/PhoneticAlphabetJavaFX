@@ -20,7 +20,7 @@ import javafx.util.Duration;
 
 
 public class PhoneticAlphabet extends Application {
-    private final AlphabetData alphabetData = new AlphabetData();
+    private final InitiliseGameData initiliseGameData = new InitiliseGameData();
     private final StartLayout layout1 = new StartLayout();
 
     private final GameLayout gameLayout = new GameLayout();
@@ -40,14 +40,14 @@ public class PhoneticAlphabet extends Application {
 
         /* Alphabet List*/
         Button closeAlphabet = new Button("Close");
-        AlphabetListLayout layout2 = new AlphabetListLayout(closeAlphabet, startGame, alphabetData);
+        AlphabetListLayout layout2 = new AlphabetListLayout(closeAlphabet, startGame, initiliseGameData);
         alphabetWindow = layout2.getAlphabetWindow();
 
         /*Main Game Screen*/
         Label time = new Label("Time: 0");
         Label points = new Label("Points: " + totalPoints);
         TextField input = new TextField();
-        Label guessLetter = new Label(alphabetData.getCurrentLetter());
+        Label guessLetter = new Label(initiliseGameData.getCurrentLetter());
         guessLetter.setFont(new Font("Ariel", 50));
         BorderPane layout = gameLayout.getGameLayout(time, points, input, guessLetter);
 
@@ -79,14 +79,14 @@ public class PhoneticAlphabet extends Application {
 
         gameScreen.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
-                if (alphabetData.isCorrect(input.getText())) {
+                if (initiliseGameData.isCorrect(input.getText())) {
                     totalPoints = totalPoints + 10;
                     points.setText("Points: " + totalPoints);
 
 
                 }
-                alphabetData.getRandom();
-                guessLetter.setText(alphabetData.getCurrentLetter());
+                initiliseGameData.selectRandomLetter();
+                guessLetter.setText(initiliseGameData.getCurrentLetter());
                 input.setText("");
                 input.requestFocus();
             }
