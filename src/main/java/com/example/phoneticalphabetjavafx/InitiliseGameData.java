@@ -63,8 +63,13 @@ public class InitiliseGameData {
 
 
     public boolean isCorrect(String guess) {
-        return guess.equalsIgnoreCase(alphabet.get(currentLetter));
+
+        return LevensteinDistance.calculate(guess, alphabet.get(currentLetter)) <= 1;
+
+       // return guess.equalsIgnoreCase(alphabet.get(currentLetter));
     }
+
+
 
 
 }
