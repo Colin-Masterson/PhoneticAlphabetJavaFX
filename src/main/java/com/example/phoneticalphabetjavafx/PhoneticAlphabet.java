@@ -22,12 +22,11 @@ import javafx.util.Duration;
 public class PhoneticAlphabet extends Application {
     private final InitiliseGameData initiliseGameData = new InitiliseGameData();
     private final StartLayout layout1 = new StartLayout();
-
     private final GameLayout gameLayout = new GameLayout();
+    private final GameOverLayout gameOverLayout = new GameOverLayout();
 
     private int totalPoints = 0;
     private int seconds = 0;
-
     private Stage alphabetWindow;
 
 
@@ -37,6 +36,7 @@ public class PhoneticAlphabet extends Application {
         Button showAlphabet = new Button("Show Alphabet");
         Button startGame = new Button("Start");
         BorderPane startLayout = layout1.getStartLayout(showAlphabet, startGame);
+        Scene startScreen = new Scene(startLayout, 450, 240);
 
         /* Alphabet List*/
         Button closeAlphabet = new Button("Close");
@@ -52,6 +52,9 @@ public class PhoneticAlphabet extends Application {
         BorderPane layout = gameLayout.getGameLayout(time, points, input, guessLetter);
 
 
+
+
+
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 
             seconds++;
@@ -65,9 +68,12 @@ public class PhoneticAlphabet extends Application {
         new AnimationTimer() {
             @Override
             public void handle(long l) {
-                if (seconds >= 30) {
+                if (seconds >= 10) {
                     timeline.stop();
-                    guessLetter.setText("Fin");
+                    BorderPane finishScreenLayout = gameOverLayout.getGameOverLayout(totalPoints);
+                    Scene gameOverScene = new Scene(finishScreenLayout, 320, 240);
+
+                    stage.setScene(gameOverScene);
                 }
             }
         }.start();
@@ -80,7 +86,7 @@ public class PhoneticAlphabet extends Application {
         gameScreen.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
                 if (initiliseGameData.isCorrect(input.getText())) {
-                    totalPoints = totalPoints + 10;
+                    this.totalPoints = totalPoints + 10;
                     points.setText("Points: " + totalPoints);
 
 
@@ -108,7 +114,6 @@ public class PhoneticAlphabet extends Application {
             alphabetWindow.hide();
         });
 
-        Scene startScreen = new Scene(startLayout, 450, 240);
 
         stage.setTitle("Learn the Phonetic Alphabet");
         stage.setResizable(false);
